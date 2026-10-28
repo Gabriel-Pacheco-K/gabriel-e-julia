@@ -96,8 +96,12 @@ window.CONFIG = {
     "Porque eu escolheria você de novo. Em todas as vidas."
   ],
 
-  // Opcional: "musica.mp3" para tocar a música de vocês no lugar da caixinha de música
+  // Música de fundo: começa sozinha quando ela abre a capa (false = só no botão de som)
+  musicaAuto: true,
+  // Opcional: "musica.mp3" para tocar um arquivo no lugar do piano gerado pelo próprio diário
   musica: "",
+  // Link do YouTube de Plano C (ex: "https://youtu.be/XXXXXXXXXXX"). Vazio = abre a busca no YouTube
+  planoC: "",
 
   // Recadinho no final do diário
   dedicatoria: "Eu te dedico a música do Zé Neto e Cristiano, Plano C, já que você põe essa música bastante no carro kkkk"
@@ -425,17 +429,27 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .art-msg button{text-decoration:underline;text-underline-offset:.6cqw;font-style:italic;color:#7a1630}
 
 /* ---------- 10 · contracapa ---------- */
-.end-card{top:13cqw;width:76cqw;transform:translateX(-50%) rotate(.5deg);padding:7cqw 6cqw 7cqw}
+.end-card{top:8cqw;width:78cqw;transform:translateX(-50%) rotate(.5deg);padding:5.6cqw 6cqw 4.6cqw}
 .end-card .kicker{color:#7a5c40}
-.end-card .big{font-size:11cqw;color:#6d1228}
-.end-card p{font-family:var(--serif);font-style:italic;font-size:4.2cqw;line-height:1.38;margin-top:3cqw}
-.end-card .sig{font-family:var(--hand);font-size:6cqw;color:#7a1630;margin-top:3cqw}
-.end-card .ps{font-family:var(--hand);font-style:normal;font-size:4.6cqw;line-height:1.15;color:#3a271b;margin-top:3cqw;padding-top:2.6cqw;border-top:1px dashed rgba(139,106,69,.5)}
+.end-card .big{font-size:10cqw;color:#6d1228}
+.end-card p{font-family:var(--serif);font-style:italic;font-size:4.1cqw;line-height:1.34;margin-top:2.4cqw}
+.end-card .sig{font-family:var(--hand);font-size:6cqw;color:#7a1630;margin-top:2cqw}
+.end-card .ps{font-family:var(--hand);font-style:normal;font-size:4.6cqw;line-height:1.15;color:#3a271b;margin-top:2.4cqw;padding-top:2.2cqw;border-top:1px dashed rgba(139,106,69,.5)}
 .end-card .ps b{color:#7a1630}
-.love-btn{display:grid;place-items:center;width:14cqw;height:14cqw;margin:3.4cqw auto 0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#e0546f,#a01a3a 60%,#6a0b22);color:#ffe3e8;font-size:7cqw;box-shadow:0 1.4cqw 3cqw rgba(110,10,40,.5),inset 0 0 0 .8cqw rgba(255,255,255,.1);animation:beat 1.4s ease-in-out infinite}
+.vinyl{display:inline-flex;align-items:center;gap:2cqw;margin-top:2.4cqw;padding:1.2cqw 3.4cqw 1.2cqw 1.4cqw;border-radius:6cqw;background:#2a1016;color:#f3e2c4;font-family:var(--serif);font-style:italic;font-size:3.4cqw;box-shadow:0 1cqw 2cqw rgba(60,10,20,.35)}
+.vinyl b{font-weight:600;color:#e8cf93}
+.vinyl i{width:6.4cqw;height:6.4cqw;border-radius:50%;background:radial-gradient(circle,#c63c58 0 22%,#1a0a0e 24% 30%,#2e2226 31% 36%,#141014 37% 44%,#2a2024 45% 52%,#121014 53%);animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.yt{position:fixed;inset:0;z-index:950;background:rgba(10,3,6,.88);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.yt.show{opacity:1;pointer-events:auto}
+.yt-box{width:min(92vw,560px);text-align:center}
+.yt-box iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6);background:#000}
+.yt-box p{font-family:var(--hand);font-size:24px;color:#f3e2c4;margin-top:14px}
+.yt-close{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:17px;color:#e8cf93;text-decoration:underline;text-underline-offset:4px}
+.love-btn{display:grid;place-items:center;width:12cqw;height:12cqw;margin:2.6cqw auto 0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#e0546f,#a01a3a 60%,#6a0b22);color:#ffe3e8;font-size:7cqw;box-shadow:0 1.4cqw 3cqw rgba(110,10,40,.5),inset 0 0 0 .8cqw rgba(255,255,255,.1);animation:beat 1.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.1)}30%{transform:scale(.98)}45%{transform:scale(1.06)}}
-.love-txt{display:block;font-family:var(--serif);font-style:italic;font-size:3.4cqw;color:#6b5442;margin-top:2cqw;min-height:5cqw}
-.restart{position:absolute;bottom:8cqw;left:50%;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:3.8cqw;color:#e8cf93;white-space:nowrap}
+.love-txt{display:block;font-family:var(--serif);font-style:italic;font-size:3.4cqw;color:#6b5442;margin-top:1.4cqw;min-height:4.4cqw}
+.restart{position:absolute;bottom:5.4cqw;left:50%;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:3.8cqw;color:#e8cf93;white-space:nowrap}
 
 /* ---------- controles ---------- */
 .controls{position:relative;display:flex;align-items:center;justify-content:center;gap:26px;padding:12px 0 6px}
@@ -721,6 +735,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
           <p>Esse diário não termina aqui. Cada página em branco que vem depois desta é nossa — e eu quero escrever todas elas com você.</p>
           <p class="sig">Com amor, <span data-f="ele"></span></p>
           <p class="ps"><b>P.S.</b> <span id="dedicatoria"></span> &#9829;&#xFE0E;</p>
+          <button class="vinyl" id="planoBtn"><i></i><span>tocar <b>Plano C</b></span></button>
           <button class="love-btn" id="loveBtn" aria-label="Aperte se você me ama">&#9829;&#xFE0E;</button>
           <span class="love-txt" id="loveTxt">aperte se você me ama</span>
         </div>
@@ -745,6 +760,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
   </div>
 </div>
 
+<div class="yt" id="yt"><div class="yt-box"><iframe id="ytFrame" title="Plano C — Zé Neto e Cristiano" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><p>Plano C, pra você ♥</p><button class="yt-close" id="ytClose">fechar</button></div></div>
 <div class="lb" id="lb"><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
 
 <script>
@@ -1156,6 +1172,17 @@ $('#loveBtn').addEventListener('click', e => { hearts(e.clientX, e.clientY, 30);
 $('#restart').addEventListener('click', () => go(0));
 $('#dedicatoria').textContent = C.dedicatoria || '';
 if (!C.dedicatoria) $('.ps').remove();
+const ytId = (C.planoC.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1];
+let musicBeforeYt = false;
+$('#planoBtn').addEventListener('click', () => {
+  if (!ytId) { window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent('Zé Neto e Cristiano Plano C'), '_blank', 'noopener'); return; }
+  musicBeforeYt = musicOn; if (musicOn) setMusic(false);
+  $('#ytFrame').src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`;
+  $('#yt').classList.add('show');
+});
+function closeYt() { $('#yt').classList.remove('show'); $('#ytFrame').src = 'about:blank'; if (musicBeforeYt) setMusic(true); }
+$('#ytClose').addEventListener('click', closeYt);
+$('#yt').addEventListener('click', e => { if (e.target.id === 'yt') closeYt(); });
 
 /* ---------- corações ---------- */
 function hearts(x, y, n = 18) {
@@ -1187,7 +1214,7 @@ function go(n) {
   if (fwd) { old.classList.remove('active', 'under'); old.classList.add('past', 'turning'); nw.classList.remove('future', 'past', 'under'); nw.classList.add('active'); }
   else { nw.classList.remove('past', 'future'); nw.classList.add('active', 'turning'); old.classList.remove('active'); old.classList.add('under'); }
   cur = n; settleT = setTimeout(settle, 1100);
-  sfx('page'); ui();
+  autoMusic(); sfx('page'); ui();
 }
 function ui() {
   const t = pages[cur].dataset.title;
@@ -1217,28 +1244,34 @@ window.addEventListener('hashchange', () => go(fromHash()));
 cur = fromHash();
 settle(); ui();
 
-/* ---------- som: caixinha de música + efeitos ---------- */
-let actx = null, master = null, musicOn = false, schedT = null, nextBeat = 0, evIdx = 0, loopStart = 0, audioEl = null;
-const BEAT = 60 / 78;
+/* ---------- som: piano romântico + efeitos ---------- */
+let actx = null, master = null, musicOn = false, schedT = null, evIdx = 0, loopStart = 0, audioEl = null, autoStarted = false;
+const BEAT = 60 / 66;
+// progressão C – G – Am – F – C – G – F – G, arpejo de piano + melodia
 const EVENTS = (() => {
-  const chords = [[48, 55, 60, 64, 60, 55], [45, 52, 57, 60, 57, 52], [41, 48, 53, 57, 53, 48], [43, 50, 55, 59, 55, 50]];
-  const mel = [[[76, 2], [79, 1]], [[76, 1], [74, 1], [72, 1]], [[81, 2], [79, 1]], [[74, 3]], [[76, 2], [79, 1]], [[81, 1], [79, 1], [76, 1]], [[77, 1], [76, 1], [74, 1]], [[72, 3]]];
-  const prog = [0, 1, 2, 3, 0, 1, 2, 0], ev = [];
+  const roots = [48, 43, 45, 41, 48, 43, 41, 43], minor = [false, false, true, false, false, false, false, false];
+  const mel = [
+    [[76, 2], [79, 1], [77, .5], [76, .5]], [[74, 3], [71, 1]], [[72, 2], [76, 1], [74, 1]], [[72, 3], [69, 1]],
+    [[76, 1.5], [77, .5], [79, 2]], [[81, 1], [79, 1], [77, 1], [76, 1]], [[77, 1], [76, 1], [74, 1], [72, 1]], [[74, 2], [71, 1], [72, 1]]
+  ];
+  const ev = [];
   for (let b = 0; b < 8; b++) {
-    const base = b * 3;
-    chords[prog[b]].forEach((m, k) => ev.push({ t: base + k * .5, m: m + 12, v: .05, d: 1.8 }));
-    let tt = base; mel[b].forEach(([m, len]) => { ev.push({ t: tt, m: m + 12, v: .13, d: 1.6 + len * .4 }); tt += len; });
+    const base = b * 4, r = roots[b], third = minor[b] ? 15 : 16;
+    ev.push({ t: base, m: r - 12, v: .07, d: 3.6 });
+    [0, 7, 12, third, 19, third, 12, 7].forEach((o, k) => ev.push({ t: base + k * .5, m: r + o, v: k ? .032 : .045, d: 2.4 }));
+    let tt = base; mel[b].forEach(([m, len]) => { ev.push({ t: tt, m, v: .12, d: 1.8 + len * .6 }); tt += len; });
   }
   return ev.sort((a, b) => a.t - b.t);
 })();
-const LOOP_BEATS = 24;
+const LOOP_BEATS = 32;
 function initAudio() {
   if (actx) return;
   actx = new (window.AudioContext || window.webkitAudioContext)();
   master = actx.createGain(); master.gain.value = 0;
+  const warm = actx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 2600;
   const delay = actx.createDelay(), fb = actx.createGain(), wet = actx.createGain();
-  delay.delayTime.value = .31; fb.gain.value = .3; wet.gain.value = .3;
-  master.connect(actx.destination); master.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(actx.destination);
+  delay.delayTime.value = .36; fb.gain.value = .32; wet.gain.value = .28;
+  master.connect(warm); warm.connect(actx.destination); warm.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(actx.destination);
 }
 function tone(midi, t, dur, vel, out) {
   const f = 440 * Math.pow(2, (midi - 69) / 12);
@@ -1249,30 +1282,45 @@ function tone(midi, t, dur, vel, out) {
     o.connect(g).connect(out); o.start(t); o.stop(t + d + .05);
   });
 }
+function piano(midi, t, dur, vel) {
+  const f = 440 * Math.pow(2, (midi - 69) / 12);
+  [['triangle', 1, vel], ['sine', 2, vel * .35], ['sine', 3, vel * .08]].forEach(([type, mul, v]) => {
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = f * mul; o.detune.value = (Math.random() - .5) * 4;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .008);
+    g.gain.exponentialRampToValueAtTime(v * .35, t + .25); g.gain.exponentialRampToValueAtTime(.0004, t + dur / mul);
+    o.connect(g).connect(master); o.start(t); o.stop(t + dur + .1);
+  });
+}
 function scheduler() {
-  const ahead = actx.currentTime + .35;
+  const ahead = actx.currentTime + .4;
   while (true) {
     const e = EVENTS[evIdx], at = loopStart + e.t * BEAT;
     if (at > ahead) break;
-    if (at >= actx.currentTime - .05) tone(e.m, at, e.d, e.v, master);
+    if (at >= actx.currentTime - .05) piano(e.m, at, e.d, e.v);
     evIdx++;
     if (evIdx >= EVENTS.length) { evIdx = 0; loopStart += LOOP_BEATS * BEAT; }
   }
 }
 function setMusic(on) {
-  musicOn = on; $('#snd').classList.toggle('playing', on);
+  musicOn = on; autoStarted = true; $('#snd').classList.toggle('playing', on);
+  initAudio(); actx.resume();
   if (C.musica) {
     if (!audioEl) { audioEl = new Audio(C.musica); audioEl.loop = true; audioEl.volume = .7; }
     on ? audioEl.play().catch(() => {}) : audioEl.pause();
-    initAudio(); actx.resume();
     return;
   }
-  initAudio(); actx.resume();
   const now = actx.currentTime;
   master.gain.cancelScheduledValues(now); master.gain.setValueAtTime(master.gain.value, now);
-  master.gain.linearRampToValueAtTime(on ? .9 : 0, now + (on ? 1.2 : .5));
-  if (on && !schedT) { loopStart = now + .1; evIdx = 0; schedT = setInterval(scheduler, 90); }
-  if (!on) setTimeout(() => { if (!musicOn) { clearInterval(schedT); schedT = null; } }, 600);
+  master.gain.linearRampToValueAtTime(on ? .9 : 0, now + (on ? 2.5 : .6));
+  if (on && !schedT) { loopStart = now + .15; evIdx = 0; schedT = setInterval(scheduler, 90); }
+  if (!on) setTimeout(() => { if (!musicOn) { clearInterval(schedT); schedT = null; } }, 700);
+}
+// a música entra sozinha no primeiro toque que vira a página (o navegador só deixa tocar depois de um toque)
+function autoMusic() {
+  if (autoStarted || C.musicaAuto === false) return;
+  const gesto = navigator.userActivation ? navigator.userActivation.isActive : true;
+  if (gesto) setMusic(true);
 }
 $('#snd').addEventListener('click', () => setMusic(!musicOn));
 function sfx(kind) {

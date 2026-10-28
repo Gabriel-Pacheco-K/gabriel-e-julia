@@ -15,7 +15,7 @@ Um álbum/diário digital em uma página só (`index.html`), sem dependências.
 9. **O nosso retrato** — quebra-cabeça da foto de vocês no cavalete
 10. **Continua…** — contracapa com o botão "aperte se você me ama"
 
-Navegação: setas, arrastar para os lados ou teclado (← →). O ícone de som liga uma caixinha de música.
+Navegação: setas, arrastar para os lados ou teclado (← →). Uma música de piano começa sozinha quando ela abre a capa; o ícone de som liga e desliga.
 
 ## Como personalizar
 
@@ -23,7 +23,8 @@ Tudo fica no bloco `CONFIG`, no topo do `index.html`:
 
 - `inicio`: data e hora em que vocês começaram (alimenta o contador, a lua, a capa e o dicionário)
 - `cidadeEle`, `cidadeEla`, `carta`, `motivos`, `momentos`, `dicionarioExemplo`
-- `musica`: coloque um `musica.mp3` na pasta e escreva `"musica.mp3"` para tocar a música de vocês
+- `musicaAuto`: a música de fundo começa ao abrir a capa (`false` para só tocar no botão)
+- `planoC`: link do YouTube de Plano C para o botão "tocar Plano C" da última página
 
 ## Fotos
 
