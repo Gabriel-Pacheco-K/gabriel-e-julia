@@ -177,12 +177,12 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .card{position:absolute;left:50%;background:linear-gradient(160deg,#f8efdc,#ecdfc2);color:var(--ink);text-align:center;border:.35cqw solid #8b6a45;box-shadow:inset 0 0 0 1.1cqw #f6ecd6,inset 0 0 0 1.35cqw #8b6a45,0 2.4cqw 5cqw rgba(0,0,0,.5)}
 .exlibris{top:15cqw;width:58cqw;transform:translateX(-50%) rotate(-.6deg);padding:5cqw 4cqw 11cqw}
 .medal{width:36cqw;display:block;margin:0 auto}
-.exlibris .ex{font-family:var(--serif);font-size:2.6cqw;letter-spacing:.5em;margin-top:1.2cqw;color:#6a4a32}
+.exlibris .ex{font-family:var(--serif);font-size:2.4cqw;letter-spacing:.24em;margin-top:1.2cqw;color:#7a1630}
 .exlibris .belongs{font-family:var(--serif);font-style:italic;font-size:3.9cqw;margin-top:1.6cqw}
 .exlibris .owner{font-family:var(--serif);font-style:italic;font-weight:600;font-size:13cqw;line-height:1.05;color:#6d1228;margin-top:.6cqw}
 .rule{width:60%;height:1px;margin:2cqw auto;background:linear-gradient(90deg,transparent,#8b6a45,transparent)}
 .exlibris .since{font-family:var(--serif);font-style:italic;font-size:3.3cqw;color:#5a4030}
-.exlibris .exemplar{font-family:var(--serif);font-size:2.2cqw;letter-spacing:.35em;margin-top:2cqw;color:#7a5c40}
+.exlibris .exemplar{font-family:var(--serif);font-size:2.1cqw;letter-spacing:.2em;margin-top:2cqw;color:#7a5c40}
 .seal-wrap{position:absolute;left:50%;bottom:-9cqw;width:19cqw;height:19cqw;transform:translateX(-50%)}
 .seal-wrap i{position:absolute;top:62%;width:5.6cqw;height:13cqw;background:linear-gradient(#a3213f,#6e1029);clip-path:polygon(0 0,100% 0,100% 100%,50% 84%,0 100%)}
 .seal-wrap i:nth-child(1){left:24%;transform:rotate(18deg)}
@@ -496,15 +496,15 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
         <div class="stitch"></div>
         <div class="card exlibris">
           <svg class="medal" id="medal" viewBox="0 0 200 124" aria-hidden="true"></svg>
-          <div class="ex">EX · LIBRIS</div>
+          <div class="ex">PARA O AMOR DA MINHA VIDA</div>
           <div class="belongs">Este diário pertence a</div>
           <div class="owner" data-f="ela"></div>
           <div class="rule"></div>
           <div class="since">desde <span data-f="inicioLongo"></span></div>
-          <div class="exemplar">EXEMPLAR ÚNICO · Nº 1</div>
+          <div class="exemplar">ÚNICO NO MUNDO, IGUAL A VOCÊ</div>
           <div class="seal-wrap"><i></i><i></i><div class="seal"><b data-f="iniciais"></b></div></div>
         </div>
-        <div class="tap">toque para abrir ›</div>
+        <div class="tap">toque para abrir ›<small style="display:block;font-size:2.8cqw;margin-top:1cqw;opacity:.75">aumente o volume ♪</small></div>
         <span class="pn l" style="color:#e8cf93">1</span>
       </section>
 
@@ -1261,9 +1261,9 @@ const EVENTS = (() => {
   const ev = [];
   for (let b = 0; b < 8; b++) {
     const base = b * 4, r = roots[b], third = minor[b] ? 15 : 16;
-    ev.push({ t: base, m: r - 12, v: .07, d: 3.6 });
-    [0, 7, 12, third, 19, third, 12, 7].forEach((o, k) => ev.push({ t: base + k * .5, m: r + o, v: k ? .032 : .045, d: 2.4 }));
-    let tt = base; mel[b].forEach(([m, len]) => { ev.push({ t: tt, m, v: .12, d: 1.8 + len * .6 }); tt += len; });
+    ev.push({ t: base, m: r, v: .09, d: 3.6 });
+    [0, 7, 12, third, 19, third, 12, 7].forEach((o, k) => ev.push({ t: base + k * .5, m: r + 12 + o, v: k ? .05 : .065, d: 2.4 }));
+    let tt = base; mel[b].forEach(([m, len]) => { ev.push({ t: tt, m: m + 12, v: .16, d: 1.8 + len * .6 }); tt += len; });
   }
   return ev.sort((a, b) => a.t - b.t);
 })();
@@ -1272,10 +1272,11 @@ function initAudio() {
   if (actx) return;
   actx = new (window.AudioContext || window.webkitAudioContext)();
   master = actx.createGain(); master.gain.value = 0;
-  const warm = actx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 2600;
+  const warm = actx.createBiquadFilter(); warm.type = 'lowpass'; warm.frequency.value = 3200;
+  const comp = actx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 4; comp.connect(actx.destination);
   const delay = actx.createDelay(), fb = actx.createGain(), wet = actx.createGain();
   delay.delayTime.value = .36; fb.gain.value = .32; wet.gain.value = .28;
-  master.connect(warm); warm.connect(actx.destination); warm.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(actx.destination);
+  master.connect(warm); warm.connect(comp); warm.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(comp);
 }
 function tone(midi, t, dur, vel, out) {
   const f = 440 * Math.pow(2, (midi - 69) / 12);
@@ -1306,9 +1307,23 @@ function scheduler() {
     if (evIdx >= EVENTS.length) { evIdx = 0; loopStart += LOOP_BEATS * BEAT; }
   }
 }
+let unlockEl = null;
+function silentWav() {
+  const n = 8000, buf = new ArrayBuffer(44 + n), v = new DataView(buf), w = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true);
+  for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+  return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+}
+function unlockAudio() {
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  if (!unlockEl) { unlockEl = new Audio(silentWav()); unlockEl.loop = true; unlockEl.setAttribute('playsinline', ''); }
+  unlockEl.play().catch(() => {});
+}
 function setMusic(on) {
   musicOn = on; autoStarted = true; $('#snd').classList.toggle('playing', on);
   initAudio(); actx.resume();
+  if (on) unlockAudio(); else if (unlockEl) unlockEl.pause();
   if (C.musica) {
     if (!audioEl) { audioEl = new Audio(C.musica); audioEl.loop = true; audioEl.volume = .7; }
     on ? audioEl.play().catch(() => {}) : audioEl.pause();
@@ -1316,7 +1331,7 @@ function setMusic(on) {
   }
   const now = actx.currentTime;
   master.gain.cancelScheduledValues(now); master.gain.setValueAtTime(master.gain.value, now);
-  master.gain.linearRampToValueAtTime(on ? .9 : 0, now + (on ? 2.5 : .6));
+  master.gain.linearRampToValueAtTime(on ? 1.6 : 0, now + (on ? 2 : .6));
   if (on && !schedT) { loopStart = now + .15; evIdx = 0; schedT = setInterval(scheduler, 90); }
   if (!on) setTimeout(() => { if (!musicOn) { clearInterval(schedT); schedT = null; } }, 700);
 }
