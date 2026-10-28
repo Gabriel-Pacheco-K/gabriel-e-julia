@@ -30,7 +30,12 @@ Tudo fica no bloco `CONFIG`, no topo do `index.html`:
 As fotos ficam em `fotos/` (`01.jpg` … `15.jpg`) e são listadas em `CONFIG.fotos`, cada uma com um `foco` (onde ficam os rostos, para o recorte não cortar ninguém). Se faltar alguma, aparece um coração no lugar.
 Os índices em `CONFIG` (`fotoLua`, `fotoRetrato`, `cabine`, `dicionario`, `momentos[].foto`) escolhem qual foto vai em cada lugar (0 = `01.jpg`).
 
-## Publicar no GitHub Pages
+## Publicação
+
+O site é publicado automaticamente pelo GitHub Actions (`.github/workflows/pages.yml`) a cada push na `main`:
+https://gabriel-pacheco-k.github.io/gabriel-e-julia/
+
+## Publicar em outro repositório
 
 1. Crie um repositório e suba `index.html` e a pasta `fotos/`
 2. Em **Settings → Pages**, escolha a branch `main` e a pasta `/ (root)`
