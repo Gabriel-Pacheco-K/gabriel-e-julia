@@ -66,6 +66,7 @@ window.CONFIG = {
   carta: [
     "Tem dias que eu paro, olho pra você e fico pensando como foi que eu tive tanta sorte. Não é exagero — é que com você as coisas simplesmente fazem sentido. Até os dias mais corridos ficam leves quando eu sei que, no fim deles, tem você.",
     "Obrigado por rir das minhas piadas ruins, por ter paciência comigo, por acreditar em mim quando eu mesmo duvido e por transformar qualquer momento bobo numa lembrança que eu quero guardar pra sempre.",
+    "Eu agradeço a Deus todos os dias por ter colocado você no meu caminho. Tenho certeza de que nada disso foi por acaso: foi Ele quem escreveu o começo da nossa história, e eu peço que Ele continue cuidando de nós em cada capítulo que vem.",
     "Fiz esse diário pra gente nunca esquecer o caminho até aqui. Mas, sinceramente, a melhor parte ainda é o que vem pela frente — e eu quero viver cada página dela do seu lado."
   ],
   dataCarta: "",                // vazio = data de hoje. Ou ex: "2026-10-27"
@@ -93,6 +94,7 @@ window.CONFIG = {
     "Porque a sua risada é a minha música preferida.",
     "Porque você tem o coração mais bonito que eu conheço.",
     "Porque com você eu me sinto em casa.",
+    "Porque eu sei que foi Deus quem colocou você na minha vida.",
     "Porque eu escolheria você de novo. Em todas as vidas."
   ],
 
@@ -101,7 +103,7 @@ window.CONFIG = {
   // Opcional: "musica.mp3" para tocar um arquivo no lugar do piano gerado pelo próprio diário
   musica: "",
   // Link do YouTube de Plano C (ex: "https://youtu.be/XXXXXXXXXXX"). Vazio = abre a busca no YouTube
-  planoC: "",
+  planoC: "https://www.youtube.com/watch?v=J_2EgtODGt4",
 
   // Recadinho no final do diário
   dedicatoria: "Eu te dedico a música do Zé Neto e Cristiano, Plano C, já que você põe essa música bastante no carro kkkk"
@@ -445,6 +447,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .yt-box{width:min(92vw,560px);text-align:center}
 .yt-box iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6);background:#000}
 .yt-box p{font-family:var(--hand);font-size:24px;color:#f3e2c4;margin-top:14px}
+.yt-out{display:inline-block;font-family:var(--serif);font-style:italic;font-size:15px;color:#c9b8a8;margin-top:4px}
 .yt-close{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:17px;color:#e8cf93;text-decoration:underline;text-underline-offset:4px}
 .love-btn{display:grid;place-items:center;width:12cqw;height:12cqw;margin:2.6cqw auto 0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#e0546f,#a01a3a 60%,#6a0b22);color:#ffe3e8;font-size:7cqw;box-shadow:0 1.4cqw 3cqw rgba(110,10,40,.5),inset 0 0 0 .8cqw rgba(255,255,255,.1);animation:beat 1.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.1)}30%{transform:scale(.98)}45%{transform:scale(1.06)}}
@@ -529,7 +532,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
         </div>
         <div class="t-text">
           <div class="kicker"><span data-f="ele"></span> &amp; <span data-f="ela"></span></div>
-          <p class="quote">O tempo passou e só confirmou o que a gente já sentia lá no começo: era mesmo pra ser.</p>
+          <p class="quote">O tempo passou e só confirmou o que a gente já sentia lá no começo: Deus sabia o que estava fazendo.</p>
           <div class="orn">&#9829;&#xFE0E;</div>
           <p class="since2">desde <span data-f="inicioLongo"></span><span id="sinceHora">, às <span data-f="inicioHora"></span></span></p>
           <p class="days" id="totalDays"></p>
@@ -732,7 +735,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
           <div class="kicker">Capítulo seguinte</div>
           <div class="big">Continua…</div>
           <div class="orn" style="color:#8b6a45">&#9829;&#xFE0E;</div>
-          <p>Esse diário não termina aqui. Cada página em branco que vem depois desta é nossa — e eu quero escrever todas elas com você.</p>
+          <p>Esse diário não termina aqui. Cada página em branco que vem depois desta é nossa — e eu quero escrever todas elas com você, com Deus guiando cada linha.</p>
           <p class="sig">Com amor, <span data-f="ele"></span></p>
           <p class="ps"><b>P.S.</b> <span id="dedicatoria"></span> &#9829;&#xFE0E;</p>
           <button class="vinyl" id="planoBtn"><i></i><span>tocar <b>Plano C</b></span></button>
@@ -760,7 +763,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
   </div>
 </div>
 
-<div class="yt" id="yt"><div class="yt-box"><iframe id="ytFrame" title="Plano C — Zé Neto e Cristiano" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><p>Plano C, pra você ♥</p><button class="yt-close" id="ytClose">fechar</button></div></div>
+<div class="yt" id="yt"><div class="yt-box"><iframe id="ytFrame" title="Plano C — Zé Neto e Cristiano" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><p>Plano C, pra você ♥</p><a class="yt-out" id="ytOut" target="_blank" rel="noopener">não carregou? abrir no YouTube</a><br><button class="yt-close" id="ytClose">fechar</button></div></div>
 <div class="lb" id="lb"><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
 
 <script>
@@ -1178,6 +1181,7 @@ $('#planoBtn').addEventListener('click', () => {
   if (!ytId) { window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent('Zé Neto e Cristiano Plano C'), '_blank', 'noopener'); return; }
   musicBeforeYt = musicOn; if (musicOn) setMusic(false);
   $('#ytFrame').src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`;
+  $('#ytOut').href = `https://www.youtube.com/watch?v=${ytId}`;
   $('#yt').classList.add('show');
 });
 function closeYt() { $('#yt').classList.remove('show'); $('#ytFrame').src = 'about:blank'; if (musicBeforeYt) setMusic(true); }
