@@ -97,7 +97,10 @@ window.CONFIG = {
   ],
 
   // Opcional: "musica.mp3" para tocar a música de vocês no lugar da caixinha de música
-  musica: ""
+  musica: "",
+
+  // Recadinho no final do diário
+  dedicatoria: "Eu te dedico a música do Zé Neto e Cristiano, Plano C, já que você põe essa música bastante no carro kkkk"
 };
 </script>
 
@@ -422,12 +425,14 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .art-msg button{text-decoration:underline;text-underline-offset:.6cqw;font-style:italic;color:#7a1630}
 
 /* ---------- 10 · contracapa ---------- */
-.end-card{top:20cqw;width:76cqw;transform:translateX(-50%) rotate(.5deg);padding:7cqw 6cqw 7cqw}
+.end-card{top:13cqw;width:76cqw;transform:translateX(-50%) rotate(.5deg);padding:7cqw 6cqw 7cqw}
 .end-card .kicker{color:#7a5c40}
 .end-card .big{font-size:11cqw;color:#6d1228}
 .end-card p{font-family:var(--serif);font-style:italic;font-size:4.2cqw;line-height:1.38;margin-top:3cqw}
 .end-card .sig{font-family:var(--hand);font-size:6cqw;color:#7a1630;margin-top:3cqw}
-.love-btn{display:grid;place-items:center;width:16cqw;height:16cqw;margin:4cqw auto 0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#e0546f,#a01a3a 60%,#6a0b22);color:#ffe3e8;font-size:7cqw;box-shadow:0 1.4cqw 3cqw rgba(110,10,40,.5),inset 0 0 0 .8cqw rgba(255,255,255,.1);animation:beat 1.4s ease-in-out infinite}
+.end-card .ps{font-family:var(--hand);font-style:normal;font-size:4.6cqw;line-height:1.15;color:#3a271b;margin-top:3cqw;padding-top:2.6cqw;border-top:1px dashed rgba(139,106,69,.5)}
+.end-card .ps b{color:#7a1630}
+.love-btn{display:grid;place-items:center;width:14cqw;height:14cqw;margin:3.4cqw auto 0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#e0546f,#a01a3a 60%,#6a0b22);color:#ffe3e8;font-size:7cqw;box-shadow:0 1.4cqw 3cqw rgba(110,10,40,.5),inset 0 0 0 .8cqw rgba(255,255,255,.1);animation:beat 1.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.1)}30%{transform:scale(.98)}45%{transform:scale(1.06)}}
 .love-txt{display:block;font-family:var(--serif);font-style:italic;font-size:3.4cqw;color:#6b5442;margin-top:2cqw;min-height:5cqw}
 .restart{position:absolute;bottom:8cqw;left:50%;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:3.8cqw;color:#e8cf93;white-space:nowrap}
@@ -715,6 +720,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
           <div class="orn" style="color:#8b6a45">&#9829;&#xFE0E;</div>
           <p>Esse diário não termina aqui. Cada página em branco que vem depois desta é nossa — e eu quero escrever todas elas com você.</p>
           <p class="sig">Com amor, <span data-f="ele"></span></p>
+          <p class="ps"><b>P.S.</b> <span id="dedicatoria"></span> &#9829;&#xFE0E;</p>
           <button class="love-btn" id="loveBtn" aria-label="Aperte se você me ama">&#9829;&#xFE0E;</button>
           <span class="love-txt" id="loveTxt">aperte se você me ama</span>
         </div>
@@ -1148,6 +1154,8 @@ const respostas = ['Eu sabia. Te amo mais ♥', 'Mais uma vez? Te amo infinito.'
 let rIdx = 0;
 $('#loveBtn').addEventListener('click', e => { hearts(e.clientX, e.clientY, 30); $('#loveTxt').textContent = respostas[rIdx++ % respostas.length]; sfx('chime'); });
 $('#restart').addEventListener('click', () => go(0));
+$('#dedicatoria').textContent = C.dedicatoria || '';
+if (!C.dedicatoria) $('.ps').remove();
 
 /* ---------- corações ---------- */
 function hearts(x, y, n = 18) {
