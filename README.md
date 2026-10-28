@@ -27,8 +27,8 @@ Tudo fica no bloco `CONFIG`, no topo do `index.html`:
 
 ## Fotos
 
-Coloque 8 fotos em `fotos/` com os nomes `1.jpg` … `8.jpg`. Se faltar alguma, aparece um coração no lugar.
-Os índices em `CONFIG` (`fotoLua`, `fotoRetrato`, `cabine`, `dicionario`, `momentos[].foto`) escolhem qual foto vai em cada lugar (0 = `1.jpg`).
+As fotos ficam em `fotos/` (`01.jpg` … `15.jpg`) e são listadas em `CONFIG.fotos`, cada uma com um `foco` (onde ficam os rostos, para o recorte não cortar ninguém). Se faltar alguma, aparece um coração no lugar.
+Os índices em `CONFIG` (`fotoLua`, `fotoRetrato`, `cabine`, `dicionario`, `momentos[].foto`) escolhem qual foto vai em cada lugar (0 = `01.jpg`).
 
 ## Publicar no GitHub Pages
 

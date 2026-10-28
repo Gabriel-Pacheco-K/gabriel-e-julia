@@ -19,31 +19,44 @@ window.CONFIG = {
   ela: "Julia",
   iniciais: "G·J",
 
-  // Quando vocês começaram a namorar (ano-mês-diaThora:minuto)
-  inicio: "2024-02-12T20:00",
+  // Quando vocês começaram a namorar: "ano-mês-dia" ou "ano-mês-diaThora:minuto"
+  inicio: "2024-10-11",
 
   cidade: "Criciúma, SC",
   hemisferioSul: true,          // desenha a lua como ela é vista no Brasil
 
-  // Fotos: coloque os arquivos na pasta "fotos/" com esses nomes
-  // (ou troque os caminhos). Se faltar alguma, aparece um coração no lugar.
+  // Fotos da pasta "fotos/". "foco" diz onde ficam os rostos (x% y%) para o recorte não cortar ninguém.
+  // Se faltar algum arquivo, aparece um coração no lugar.
   fotos: [
-    "fotos/1.jpg", "fotos/2.jpg", "fotos/3.jpg", "fotos/4.jpg",
-    "fotos/5.jpg", "fotos/6.jpg", "fotos/7.jpg", "fotos/8.jpg"
+    { src: "fotos/01.jpg", foco: "50% 30%" },  //  0 espelho, roupas mostarda
+    { src: "fotos/02.jpg", foco: "60% 22%" },  //  1 festa, vestido rosa
+    { src: "fotos/03.jpg", foco: "50% 22%" },  //  2 estúdio, vestido rosa
+    { src: "fotos/04.jpg", foco: "50% 55%" },  //  3 praia
+    { src: "fotos/05.jpg", foco: "55% 38%" },  //  4 Julia, blusa clara
+    { src: "fotos/06.jpg", foco: "45% 40%" },  //  5 Julia, blusa preta
+    { src: "fotos/07.jpg", foco: "50% 45%" },  //  6 selfie de casaco
+    { src: "fotos/08.jpg", foco: "50% 40%" },  //  7 espelho, moletom marrom
+    { src: "fotos/09.jpg", foco: "50% 60%" },  //  8 pôr do sol
+    { src: "fotos/10.jpg", foco: "50% 52%" },  //  9 preto e branco
+    { src: "fotos/11.jpg", foco: "50% 38%" },  // 10 Julia pequenininha
+    { src: "fotos/12.jpg", foco: "50% 35%" },  // 11 foto retrô
+    { src: "fotos/13.jpg", foco: "50% 60%" },  // 12 passeio no mato
+    { src: "fotos/14.jpg", foco: "50% 50%" },  // 13 entre as flores
+    { src: "fotos/15.jpg", foco: "50% 45%" }   // 14 selfie no azulejo
   ],
-  fotoLua: 0,                   // índice da foto do medalhão (0 = fotos/1.jpg)
-  fotoRetrato: 1,               // foto do quebra-cabeça do ateliê
-  cabine: [0, 1, 2, 3, 4, 5, 6, 7],  // 8 fotos das tirinhas da cabine
-  dicionario: [0, 2, 4, 6],     // 4 fotos do dicionário
+  fotoLua: 3,                        // medalhão da lua
+  fotoRetrato: 13,                   // quebra-cabeça do ateliê
+  cabine: [14, 0, 9, 11, 4, 7, 5, 6],     // 8 fotos das tirinhas da cabine
+  dicionario: [2, 10, 12, 8],        // 4 fotos do dicionário
 
-  // A nossa jornada (até 6 momentos). data = ano-mês-dia
+  // A nossa jornada (até 6 momentos). data = "ano-mês-dia" (deixe "" se não lembrar)
   momentos: [
-    { foto: 0, titulo: "Onde tudo começou",    data: "2024-02-12" },
-    { foto: 1, titulo: "Nosso primeiro rolê",  data: "2024-04-06" },
-    { foto: 2, titulo: "Seu aniversário",      data: "2024-08-10" },
-    { foto: 3, titulo: "Ano novo com você",    data: "2024-12-31" },
-    { foto: 4, titulo: "Nosso 1º ano",         data: "2025-02-12" },
-    { foto: 5, titulo: "Uma noite inesquecível", data: "2025-09-20" }
+    { foto: 1,  titulo: "Uma festa inesquecível", data: "" },
+    { foto: 3,  titulo: "Pé na areia",            data: "" },
+    { foto: 12, titulo: "Nosso passeio",          data: "" },
+    { foto: 13, titulo: "Entre as flores",        data: "" },
+    { foto: 8,  titulo: "Nosso pôr do sol",       data: "" },
+    { foto: 7,  titulo: "Nós dois, sempre",       data: "" }
   ],
 
   // A carta (cada item é um parágrafo)
@@ -494,7 +507,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
           <div class="kicker"><span data-f="ele"></span> &amp; <span data-f="ela"></span></div>
           <p class="quote">O tempo passou e só confirmou o que a gente já sentia lá no começo: era mesmo pra ser.</p>
           <div class="orn">&#9829;&#xFE0E;</div>
-          <p class="since2">desde <span data-f="inicioLongo"></span>, às <span data-f="inicioHora"></span></p>
+          <p class="since2">desde <span data-f="inicioLongo"></span><span id="sinceHora">, às <span data-f="inicioHora"></span></span></p>
           <p class="days" id="totalDays"></p>
         </div>
         <span class="pn l">2</span>
@@ -734,7 +747,8 @@ const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV'
 const parseDay = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const fmtLongo = d => new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
 const pad = n => String(n).padStart(2, '0');
-const inicio = new Date(C.inicio);
+const temHora = C.inicio.includes('T');
+const inicio = temHora ? new Date(C.inicio) : parseDay(C.inicio);
 
 // gerador pseudoaleatório com semente (o desenho fica igual a cada visita)
 function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
@@ -746,6 +760,7 @@ const fields = {
   inicioHora: `${pad(inicio.getHours())}:${pad(inicio.getMinutes())}`
 };
 $$('[data-f]').forEach(el => { el.textContent = fields[el.dataset.f] ?? ''; });
+if (!temHora) $('#sinceHora').remove();
 
 /* ---------- fotos (com plano B se o arquivo não existir) ---------- */
 function placeholder(i, label) {
@@ -754,9 +769,12 @@ function placeholder(i, label) {
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='hsl(${a},45%,62%)'/><stop offset='1' stop-color='hsl(${b},48%,28%)'/></linearGradient></defs><rect width='300' height='300' fill='url(#g)'/><path d='M150 190c-38-27-60-48-60-71 0-17 13-30 29-30 13 0 24 7 31 18 7-11 18-18 31-18 16 0 29 13 29 30 0 23-22 44-60 71z' fill='rgba(255,255,255,.5)'/><text x='150' y='238' font-family='Georgia,serif' font-style='italic' font-size='22' fill='rgba(255,255,255,.85)' text-anchor='middle'>${label}</text></svg>`;
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
-const fotoPath = i => C.fotos[((i % C.fotos.length) + C.fotos.length) % C.fotos.length];
+const fotoAt = i => { const f = C.fotos[((i % C.fotos.length) + C.fotos.length) % C.fotos.length]; return typeof f === 'string' ? { src: f, foco: '50% 50%' } : { foco: '50% 50%', ...f }; };
+const fotoPath = i => fotoAt(i).src;
+const fotoFoco = i => fotoAt(i).foco;
 function setImg(img, i) {
   img.onerror = () => { img.onerror = null; img.src = placeholder(i, 'foto ' + (i + 1)); };
+  img.style.objectPosition = fotoFoco(i);
   img.src = fotoPath(i);
 }
 function resolveSrc(i) {
@@ -995,8 +1013,9 @@ window.addEventListener('resize', () => { if (lensPos) lensHome(); });
 /* ---------- 7 · jornada ---------- */
 (function journey() {
   const ms = C.momentos.slice(0, 6);
-  const d0 = parseDay(ms[0].data), d1 = parseDay(ms[ms.length - 1].data);
-  $('#jKicker').textContent = `${MESES[d0.getMonth()]} ${d0.getFullYear()} — ${MESES[d1.getMonth()]} ${d1.getFullYear()} · ${ms.length} momentos`;
+  const datas = ms.filter(m => m.data).map(m => parseDay(m.data)).sort((a, b) => a - b);
+  const mesAno = d => `${MESES[d.getMonth()]} ${d.getFullYear()}`;
+  $('#jKicker').textContent = (datas.length ? `${mesAno(datas[0])} — ${mesAno(datas[datas.length - 1])} · ` : '') + `${ms.length} momentos`;
   const rows = [36, 78], cols = [19, 50, 81], rots = [-4, 2.5, -2, 3, -3, 2];
   let paths = '', bulbs = '', polas = '';
   const sag = 7, yAt = (y0, x) => { const t = (x + 2) / 104; return y0 + 2 * sag * t * (1 - t); };
@@ -1006,10 +1025,10 @@ window.addEventListener('resize', () => { if (lensPos) lensHome(); });
     for (let x = 4; x < 100; x += 8.5) bulbs += `<span class="bulb" style="left:${x}cqw;top:${yAt(y0, x)}cqw;animation-delay:${-(x % 7) * .4}s"></span>`;
   });
   ms.forEach((m, k) => {
-    const y0 = rows[Math.floor(k / 3)], x = cols[k % 3], d = parseDay(m.data);
+    const y0 = rows[Math.floor(k / 3)], x = cols[k % 3], d = m.data ? parseDay(m.data) : null;
     polas += `<figure class="pola" style="left:${x}cqw;top:${yAt(y0, x) + 1}cqw;--r:${rots[k]}deg;animation-delay:${-k * .9}s" data-k="${k}">
       <span class="pin"></span><div class="pi"><img alt="" data-i="${m.foto}"></div>
-      <b>${m.titulo}</b><small>${d.getDate()} ${MESES[d.getMonth()]} ${d.getFullYear()}</small></figure>`;
+      <b>${m.titulo}</b><small>${d ? `${d.getDate()} ${MESES[d.getMonth()]} ${d.getFullYear()}` : '&#9829;&#xFE0E;'}</small></figure>`;
   });
   $('#jStrings').innerHTML = paths;
   $('#polas').innerHTML = bulbs + polas;
@@ -1090,7 +1109,7 @@ function renderPuzzle(popA = -1, popB = -1) {
     b.className = 'tile' + (i === sel ? ' sel' : '') + (i === popA || i === popB ? ' pop' : '');
     b.setAttribute('aria-label', 'peça ' + (i + 1));
     const ti = document.createElement('span'); ti.className = 'ti';
-    ti.style.backgroundImage = `url("${artSrc}")`;
+    ti.style.backgroundImage = `url("${artSrc}")`; ti.style.backgroundPosition = fotoFoco(C.fotoRetrato);
     ti.style.left = -(p % 3) * 100 + '%'; ti.style.top = -Math.floor(p / 3) * 100 + '%';
     b.append(ti); b.addEventListener('click', () => tapTile(i));
     puzzle.append(b);
