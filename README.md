@@ -22,7 +22,7 @@ Navegação: setas, arrastar para os lados ou teclado (← →). O ícone de som
 Tudo fica no bloco `CONFIG`, no topo do `index.html`:
 
 - `inicio`: data e hora em que vocês começaram (alimenta o contador, a lua, a capa e o dicionário)
-- `cidade`, `carta`, `motivos`, `momentos`, `dicionarioExemplo`
+- `cidadeEle`, `cidadeEla`, `carta`, `motivos`, `momentos`, `dicionarioExemplo`
 - `musica`: coloque um `musica.mp3` na pasta e escreva `"musica.mp3"` para tocar a música de vocês
 
 ## Fotos

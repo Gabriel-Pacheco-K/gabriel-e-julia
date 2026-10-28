@@ -22,7 +22,8 @@ window.CONFIG = {
   // Quando vocês começaram a namorar: "ano-mês-dia" ou "ano-mês-diaThora:minuto"
   inicio: "2024-10-11",
 
-  cidade: "Criciúma, SC",
+  cidadeEle: "Maracajá, SC",       // de onde sai a carta
+  cidadeEla: "Meleiro, SC",        // pra onde ela vai
   hemisferioSul: true,          // desenha a lua como ela é vista no Brasil
 
   // Fotos da pasta "fotos/". "foco" diz onde ficam os rostos (x% y%) para o recorte não cortar ninguém.
@@ -219,6 +220,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .opened .env-seal{opacity:0;transform:translate(-50%,-50%) scale(1.3)}
 .env-addr{position:absolute;left:7%;bottom:11%;z-index:5;font-family:var(--hand);color:#3a2a20;line-height:1}
 .env-addr b{display:block;font-size:5.6cqw}.env-addr span{font-size:4.4cqw}
+.env-addr small{display:block;font-family:var(--serif);font-style:italic;font-size:2.2cqw;color:#6b5442;margin:.2cqw 0 .9cqw .4cqw}
 .postmark{position:absolute;right:24%;bottom:12%;z-index:5;width:13cqw;height:13cqw;border-radius:50%;border:.4cqw double rgba(110,50,60,.55);display:grid;place-items:center;font-family:var(--serif);font-size:2cqw;color:rgba(110,50,60,.7);transform:rotate(-14deg);text-align:center;line-height:1.1}
 .stamp{position:absolute;right:5%;bottom:14%;z-index:5;width:11cqw;height:13cqw;background:#f6efe2;outline:.5cqw dotted #f6efe2;box-shadow:inset 0 0 0 .8cqw #f6efe2;display:grid;place-items:center;transform:rotate(3deg)}
 .stamp::before{content:"";position:absolute;inset:.8cqw;background:linear-gradient(#b3304f,#7a1630)}
@@ -226,6 +228,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
 .stamp small{position:absolute;bottom:1.2cqw;left:0;right:0;text-align:center;font-size:1cqw;letter-spacing:.1em;color:#ffd9de}
 .letter{position:absolute;left:11cqw;right:11cqw;top:5cqw;height:99cqw;z-index:2;background:linear-gradient(180deg,transparent 33%,rgba(90,60,40,.06) 33.2%,transparent 33.7%,transparent 66%,rgba(90,60,40,.06) 66.2%,transparent 66.7%),#fbf5e7;color:var(--ink);padding:6cqw 5.5cqw 5cqw;box-shadow:0 1.5cqw 4cqw rgba(0,0,0,.45);border-radius:.4cqw;transform:translateY(96cqw);transition:transform 1.2s cubic-bezier(.3,.7,.2,1) .4s;overflow-y:auto;scrollbar-width:none;user-select:text;-webkit-user-select:text}
 .letter::-webkit-scrollbar{display:none}
+.p-letter:not(.opened) .letter{visibility:hidden}
 .opened .letter{transform:translateY(0)}
 .letter.front{z-index:7}
 .l-date{text-align:right;font-family:var(--serif);font-style:italic;font-size:2.8cqw;color:var(--ink-soft)}
@@ -534,7 +537,7 @@ img{display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none
           <div class="env-flap"></div>
           <div class="env-front"></div>
           <div class="env-seal"><div class="seal"><b data-f="iniciais"></b></div></div>
-          <div class="env-addr"><b>Para: <span data-f="ela"></span></b><span>De: <span data-f="ele"></span></span></div>
+          <div class="env-addr"><b>Para: <span data-f="ela"></span></b><small data-f="cidadeEla"></small><span>De: <span data-f="ele"></span></span><small data-f="cidadeEle"></small></div>
           <div class="postmark" id="postmark"></div>
           <div class="stamp"><span>&#9829;&#xFE0E;</span><small>CORREIO DO AMOR</small></div>
         </div>
@@ -755,7 +758,7 @@ function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let
 
 /* ---------- campos de texto ---------- */
 const fields = {
-  ele: C.ele, ela: C.ela, iniciais: C.iniciais,
+  ele: C.ele, ela: C.ela, iniciais: C.iniciais, cidadeEle: C.cidadeEle, cidadeEla: C.cidadeEla,
   inicioLongo: fmtLongo(inicio),
   inicioHora: `${pad(inicio.getHours())}:${pad(inicio.getMinutes())}`
 };
@@ -866,8 +869,8 @@ tick(); setInterval(tick, 1000);
 
 /* ---------- 3 · carta ---------- */
 const dCarta = C.dataCarta ? parseDay(C.dataCarta) : new Date();
-$('#lDate').textContent = `${C.cidade ? C.cidade + ', ' : ''}${fmtLongo(dCarta)}`;
-$('#postmark').innerHTML = `${(C.cidade || '').split(',')[0].toUpperCase()}<br><b style="font-size:2.4cqw">${pad(dCarta.getDate())}/${pad(dCarta.getMonth() + 1)}/${dCarta.getFullYear()}</b>`;
+$('#lDate').textContent = `${C.cidadeEle ? C.cidadeEle + ', ' : ''}${fmtLongo(dCarta)}`;
+$('#postmark').innerHTML = `${(C.cidadeEle || '').split(',')[0].toUpperCase()}<br><b style="font-size:2.4cqw">${pad(dCarta.getDate())}/${pad(dCarta.getMonth() + 1)}/${dCarta.getFullYear()}</b>`;
 const pLetter = $('#pLetter'), letter = $('#letter'), lBody = $('#lBody');
 let typeTimer = null, typingDone = false;
 function openLetter() {
